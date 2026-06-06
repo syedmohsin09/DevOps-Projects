@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'nebula-synth-app'
+        CONTAINER_NAME = 'nebula-synth-container'
+        PORT = '80'
+    }
+
+    stages {
+        stage('Validate Environment') {
+            steps {
+                echo 'Verifying workspace files...'
+                sh 'ls -la'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image for NebulaSynth...'
+                sh "docker build -t ${IMAGE_NAME}:latest -f DevOps-Project-41/Dockerfile DevOps-Project-41/"
+            }
+        }
+
+        stage('Deploy to Localhost') {
+            steps {
+                echo 'Deploying to Localhost...'
+                // Stop and remove existing container if it exists
+                sh """
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                    docker run -d --name ${CONTAINER_NAME} -p ${PORT}:80 ${IMAGE_NAME}:latest
+                """
+                echo "Deployment completed! Application running at http://localhost:${PORT}"
+            }
+        }
+    }
+}
