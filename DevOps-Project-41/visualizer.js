@@ -47,7 +47,7 @@ class Visualizer {
                 y: Math.random() * 200,
                 radius: Math.random() * 1.5 + 0.5,
                 speed: Math.random() * 0.5 + 0.1,
-                color: Math.random() > 0.5 ? '#ffaa00' : '#ff3b3b',
+                color: Math.random() > 0.5 ? '#00e676' : '#40c4ff',
                 alpha: Math.random() * 0.5 + 0.3
             });
         }
@@ -111,7 +111,7 @@ class Visualizer {
         const height = this.canvas.height / (window.devicePixelRatio || 1);
 
         // 1. Clear with slight opacity trail to create a motion blur effect
-        this.ctx.fillStyle = 'rgba(8, 6, 4, 0.25)';
+        this.ctx.fillStyle = 'rgba(2, 8, 12, 0.25)';
         this.ctx.fillRect(0, 0, width, height);
 
         // Grid lines behind visualizer
@@ -190,14 +190,14 @@ class Visualizer {
         
         // Gradient stroke
         const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
-        gradient.addColorStop(0, '#ffcc00');
-        gradient.addColorStop(0.5, '#ff6b00');
-        gradient.addColorStop(1, '#ff3b3b');
+        gradient.addColorStop(0, '#00e676');
+        gradient.addColorStop(0.5, '#40c4ff');
+        gradient.addColorStop(1, '#7c4dff');
         this.ctx.strokeStyle = gradient;
 
         // Glowing shadow effect
         this.ctx.shadowBlur = 12;
-        this.ctx.shadowColor = 'rgba(255, 170, 0, 0.6)';
+        this.ctx.shadowColor = 'rgba(0, 230, 118, 0.6)';
 
         this.ctx.beginPath();
 
@@ -237,16 +237,16 @@ class Visualizer {
 
             // Gradient per bar
             const barGrad = this.ctx.createLinearGradient(0, height, 0, height - barHeight);
-            barGrad.addColorStop(0, '#ff3b3b');   // crimson bottom
-            barGrad.addColorStop(0.6, '#ff6b00'); // orange mid
-            barGrad.addColorStop(1, '#ffcc00');   // gold peak
+            barGrad.addColorStop(0, '#7c4dff');   // purple bottom
+            barGrad.addColorStop(0.6, '#40c4ff'); // blue mid
+            barGrad.addColorStop(1, '#00e676');   // green peak
 
             this.ctx.fillStyle = barGrad;
             
             // Glowing peaks
             if (barHeight > 10) {
                 this.ctx.shadowBlur = 8;
-                this.ctx.shadowColor = 'rgba(255, 170, 0, 0.4)';
+                this.ctx.shadowColor = 'rgba(0, 230, 118, 0.4)';
             }
             
             // Draw bar with slight top rounding
@@ -266,7 +266,7 @@ class Visualizer {
         this.drawStars(0);
 
         this.ctx.lineWidth = 2;
-        this.ctx.strokeStyle = 'rgba(255, 170, 0, 0.2)';
+        this.ctx.strokeStyle = 'rgba(0, 230, 118, 0.2)';
         this.ctx.beginPath();
         this.ctx.moveTo(0, height / 2);
         

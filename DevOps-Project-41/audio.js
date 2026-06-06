@@ -33,6 +33,9 @@ class AudioEngine {
         this.currentStep = 0;
         this.tempoInterval = null;
         
+        // Active preset tracker
+        this.currentPreset = 'space-odyssey';
+        
         // Precision Audio Scheduler parameters
         this.nextNoteTime = 0.0;
         this.scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec)
@@ -58,8 +61,14 @@ class AudioEngine {
             'F4': 349.23, 'F#4': 369.99, 'G4': 392.00, 'G#4': 415.30, 'A4': 440.00,
             'A#4': 466.16, 'B4': 493.88,
             
+            // Octave 5 (High Sweet Chimes)
+            'C5': 523.25, 'C#5': 554.37, 'D5': 587.33, 'D#5': 622.25, 'E5': 659.25,
+            'F5': 698.46, 'F#5': 739.99, 'G5': 783.99, 'G#5': 830.61, 'A5': 880.00,
+            'A#5': 932.33, 'B5': 987.77,
+            
             // Octave 2/3 (Bass Track defaults)
-            'C3': 130.81, 'D3': 146.83, 'E3': 164.81, 'G3': 196.00, 'A3': 220.00,
+            'C3': 130.81, 'D3': 146.83, 'E3': 164.81, 'F3': 174.61, 'G3': 196.00,
+            'A3': 220.00, 'B3': 246.94,
             'C2': 65.41,  'G2': 78.00,   'A2': 82.41
         };
 
@@ -133,7 +142,7 @@ class AudioEngine {
        ========================================================================== */
 
     /**
-     * Synthesizes a Bass Drum / Kick
+     * Synthesizes a Bass Drum / Kick - Soft and warm for children
      */
     triggerKick(time) {
         if (!this.ctx) return;
@@ -145,85 +154,82 @@ class AudioEngine {
         gain.connect(this.masterGain);
         
         osc.type = 'sine';
-        // Rapid pitch sweep down
-        osc.frequency.setValueAtTime(150, time);
-        osc.frequency.exponentialRampToValueAtTime(0.01, time + 0.3);
+        // Gentle sweep down
+        osc.frequency.setValueAtTime(110, time);
+        osc.frequency.exponentialRampToValueAtTime(45, time + 0.15);
         
-        // Fast decay amplitude envelope
-        gain.gain.setValueAtTime(1.0, time);
-        gain.gain.exponentialRampToValueAtTime(0.01, time + 0.25);
+        // Softer volume decay
+        gain.gain.setValueAtTime(0.45, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
         
         osc.start(time);
-        osc.stop(time + 0.3);
+        osc.stop(time + 0.18);
     }
 
     /**
-     * Synthesizes a Snare Drum using bandpassed white noise and a triangle snap
+     * Synthesizes a Snare Drum - Soft and non-intrusive
      */
     triggerSnare(time) {
         if (!this.ctx || !this.noiseBuffer) return;
 
-        // 1. Noise Component (Snare wires rattling)
+        // 1. Noise Component (Snare wires rattling) - very soft
         const noiseSource = this.ctx.createBufferSource();
         noiseSource.buffer = this.noiseBuffer;
 
         const noiseFilter = this.ctx.createBiquadFilter();
         noiseFilter.type = 'bandpass';
-        noiseFilter.frequency.setValueAtTime(1000, time);
+        noiseFilter.frequency.setValueAtTime(1200, time);
 
         const noiseGain = this.ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.6, time);
-        noiseGain.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+        noiseGain.gain.setValueAtTime(0.12, time);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
 
         noiseSource.connect(noiseFilter);
         noiseFilter.connect(noiseGain);
         noiseGain.connect(this.masterGain);
 
-        // 2. Shell Snap (Triangle pitch Sweep)
+        // 2. Shell Snap (Triangle pitch Sweep) - soft pop
         const snapOsc = this.ctx.createOscillator();
         const snapGain = this.ctx.createGain();
         
         snapOsc.type = 'triangle';
-        snapOsc.frequency.setValueAtTime(180, time);
-        snapOsc.frequency.exponentialRampToValueAtTime(80, time + 0.1);
+        snapOsc.frequency.setValueAtTime(160, time);
+        snapOsc.frequency.exponentialRampToValueAtTime(70, time + 0.08);
         
-        snapGain.gain.setValueAtTime(0.4, time);
-        snapGain.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+        snapGain.gain.setValueAtTime(0.18, time);
+        snapGain.gain.exponentialRampToValueAtTime(0.001, time + 0.08);
         
         snapOsc.connect(snapGain);
         snapGain.connect(this.masterGain);
 
         // Trigger snap
         noiseSource.start(time);
-        noiseSource.stop(time + 0.2);
+        noiseSource.stop(time + 0.12);
         
         snapOsc.start(time);
-        snapOsc.stop(time + 0.1);
+        snapOsc.stop(time + 0.08);
     }
 
     /**
-     * Synthesizes a metallic Hi-Hat using highpassed white noise
+     * Synthesizes a metallic Hi-Hat - Sweet chime-like sound for children
      */
     triggerHiHat(time) {
-        if (!this.ctx || !this.noiseBuffer) return;
+        if (!this.ctx) return;
 
-        const source = this.ctx.createBufferSource();
-        source.buffer = this.noiseBuffer;
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'highpass';
-        filter.frequency.setValueAtTime(7500, time);
-
+        const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        gain.gain.setValueAtTime(0.25, time);
-        gain.gain.exponentialRampToValueAtTime(0.01, time + 0.05);
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(8000, time);
 
-        source.connect(filter);
-        filter.connect(gain);
+        gain.gain.setValueAtTime(0.06, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.03);
+
+        osc.connect(gain);
         gain.connect(this.masterGain);
 
-        source.start(time);
-        source.stop(time + 0.06);
+        osc.start(time);
+        osc.stop(time + 0.04);
     }
 
     /* ==========================================================================
@@ -389,19 +395,30 @@ class AudioEngine {
 
         // 4. Bass Track Synth (Notes centered on space-vibes C2/G2)
         if (this.grid.bass[stepIndex]) {
-            // Alternate notes based on beat indexes to create a simple melodic movement
-            const notes = ['C2', 'C2', 'G2', 'G2', 'A2', 'A2', 'C2', 'G2'];
-            const noteIndex = Math.floor(stepIndex / 2) % notes.length;
-            const freq = this.frequencies[notes[noteIndex]];
-            this.triggerSynthNote(freq, time, 0.15);
+            let notes = ['C3', 'E3', 'G3', 'C3', 'F3', 'A3', 'G3', 'E3'];
+            if (this.currentPreset === 'cyber-drive') {
+                notes = ['F3', 'A3', 'C4', 'A3', 'G3', 'B3', 'D4', 'B3'];
+            } else if (this.currentPreset === 'retro-waves') {
+                notes = ['C3', 'G3', 'C3', 'G3', 'D3', 'A3', 'D3', 'A3'];
+            } else if (this.currentPreset === 'ambient-fog') {
+                notes = ['C2', 'G2', 'C3', 'G2', 'F2', 'C3', 'F2', 'C3'];
+            }
+            const freq = this.frequencies[notes[stepIndex % notes.length]] || 130.81;
+            this.triggerSynthNote(freq, time, 0.25);
         }
 
         // 5. Lead Synth Track (Higher notes C4/E4/G4/A4)
         if (this.grid.lead[stepIndex]) {
-            const notes = ['C4', 'E4', 'G4', 'A4', 'C4', 'G4', 'E4', 'B4'];
-            const noteIndex = Math.floor(stepIndex / 2) % notes.length;
-            const freq = this.frequencies[notes[noteIndex]];
-            this.triggerSynthNote(freq, time, 0.2);
+            let notes = ['C4', 'C4', 'G4', 'G4', 'A4', 'A4', 'G4', 'G4', 'F4', 'F4', 'E4', 'E4', 'D4', 'D4', 'C4', 'C4']; // Twinkle Twinkle
+            if (this.currentPreset === 'cyber-drive') {
+                notes = ['C4', 'E4', 'G4', 'C5', 'G4', 'E4', 'C4', 'G3', 'D4', 'F4', 'A4', 'D5', 'A4', 'F4', 'D4', 'A3'];
+            } else if (this.currentPreset === 'retro-waves') {
+                notes = ['E4', 'G4', 'A4', 'B4', 'A4', 'G4', 'E4', 'D4', 'E4', 'G4', 'A4', 'C5', 'B4', 'A4', 'G4', 'D4'];
+            } else if (this.currentPreset === 'ambient-fog') {
+                notes = ['C4', 'G4', 'C5', 'G4', 'F4', 'C5', 'F4', 'C4', 'E4', 'B4', 'E5', 'B4', 'D4', 'A4', 'D5', 'A4'];
+            }
+            const freq = this.frequencies[notes[stepIndex % notes.length]] || 261.63;
+            this.triggerSynthNote(freq, time, 0.3);
         }
     }
 
@@ -430,80 +447,74 @@ class AudioEngine {
      */
     loadPreset(presetName) {
         this.clearMatrix();
+        this.currentPreset = presetName;
         
         switch (presetName) {
             case 'space-odyssey':
-                this.bpm = 115;
+                this.bpm = 95; // child-friendly calming tempo
                 // Kick
-                [0, 4, 8, 12].forEach(i => this.grid.kick[i] = true);
+                [0, 8].forEach(i => this.grid.kick[i] = true);
                 // Snare
-                [4, 12].forEach(i => this.grid.snare[i] = true);
+                [8].forEach(i => this.grid.snare[i] = true);
                 // Hihat
-                [0, 2, 4, 6, 8, 10, 12, 14].forEach(i => this.grid.hihat[i] = true);
+                [2, 6, 10, 14].forEach(i => this.grid.hihat[i] = true);
                 // Bass
-                [0, 3, 6, 8, 11, 14].forEach(i => this.grid.bass[i] = true);
-                // Lead
-                [2, 6, 10, 14].forEach(i => this.grid.lead[i] = true);
+                [0, 4, 8, 12].forEach(i => this.grid.bass[i] = true);
+                // Lead - Sweet Twinkle Twinkle pattern
+                [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14].forEach(i => this.grid.lead[i] = true);
                 
                 // Synth parameters
                 this.oscType = 'sine';
-                this.adsr = { attack: 0.1, decay: 0.3, sustain: 0.6, release: 0.5 };
-                this.filter = { cutoff: 3500, resonance: 1.5 };
-                this.delay = { enabled: true, time: 0.4, feedback: 0.5 };
+                this.adsr = { attack: 0.15, decay: 0.2, sustain: 0.6, release: 0.6 };
+                this.filter = { cutoff: 1800, resonance: 1.0 };
+                this.delay = { enabled: true, time: 0.3, feedback: 0.4 };
                 break;
                 
             case 'cyber-drive':
-                this.bpm = 135;
-                // Driving techno beat
-                [0, 2, 4, 6, 8, 10, 12, 14].forEach(i => this.grid.kick[i] = true);
+                this.bpm = 105; // playful, not too fast
+                // Playful jumpy rhythm
+                [0, 4, 8, 12].forEach(i => this.grid.kick[i] = true);
                 [4, 12].forEach(i => this.grid.snare[i] = true);
                 [2, 6, 10, 14].forEach(i => this.grid.hihat[i] = true);
-                // Off-beat Bassline
-                [1, 3, 5, 7, 9, 11, 13, 15].forEach(i => this.grid.bass[i] = true);
-                // Sparse lead
-                [0, 8, 11, 15].forEach(i => this.grid.lead[i] = true);
-                
-                // Synth parameters
-                this.oscType = 'sawtooth';
-                this.adsr = { attack: 0.02, decay: 0.15, sustain: 0.4, release: 0.2 };
-                this.filter = { cutoff: 1800, resonance: 4.5 };
-                this.delay = { enabled: true, time: 0.15, feedback: 0.3 };
-                break;
-
-            case 'retro-waves':
-                this.bpm = 120;
-                // Synthwave 80s beat
-                [0, 8, 12].forEach(i => this.grid.kick[i] = true);
-                [4, 12].forEach(i => this.grid.snare[i] = true);
-                // Constant hi-hats
-                Array(16).fill(0).forEach((_, i) => this.grid.hihat[i] = true);
-                // Groovy bass
+                // Bass
                 [0, 2, 4, 6, 8, 10, 12, 14].forEach(i => this.grid.bass[i] = true);
-                // Melodic lead
-                [0, 3, 4, 7, 8, 11, 12, 15].forEach(i => this.grid.lead[i] = true);
+                // Lead
+                [0, 3, 6, 8, 11, 14].forEach(i => this.grid.lead[i] = true);
                 
                 // Synth parameters
                 this.oscType = 'triangle';
-                this.adsr = { attack: 0.05, decay: 0.2, sustain: 0.7, release: 0.4 };
-                this.filter = { cutoff: 2200, resonance: 2.0 };
+                this.adsr = { attack: 0.05, decay: 0.15, sustain: 0.5, release: 0.3 };
+                this.filter = { cutoff: 2000, resonance: 1.2 };
+                this.delay = { enabled: true, time: 0.2, feedback: 0.3 };
+                break;
+
+            case 'retro-waves':
+                this.bpm = 100;
+                [0, 8].forEach(i => this.grid.kick[i] = true);
+                [4, 12].forEach(i => this.grid.snare[i] = true);
+                [0, 2, 4, 6, 8, 10, 12, 14].forEach(i => this.grid.hihat[i] = true);
+                [0, 4, 8, 12].forEach(i => this.grid.bass[i] = true);
+                [0, 2, 4, 6, 8, 10, 12, 14].forEach(i => this.grid.lead[i] = true);
+                
+                // Synth parameters
+                this.oscType = 'triangle';
+                this.adsr = { attack: 0.08, decay: 0.2, sustain: 0.6, release: 0.4 };
+                this.filter = { cutoff: 2200, resonance: 1.5 };
                 this.delay = { enabled: true, time: 0.33, feedback: 0.4 };
                 break;
 
             case 'ambient-fog':
-                this.bpm = 85;
-                // Heavy sub kick
+                this.bpm = 80; // slow lullaby
                 [0, 8].forEach(i => this.grid.kick[i] = true);
-                // Hi-Hat delay patterns
-                [2, 6, 10, 14].forEach(i => this.grid.hihat[i] = true);
-                // Long swelling drone notes
-                [0, 7].forEach(i => this.grid.bass[i] = true);
+                [4, 12].forEach(i => this.grid.hihat[i] = true);
+                [0, 8].forEach(i => this.grid.bass[i] = true);
                 [0, 4, 8, 12].forEach(i => this.grid.lead[i] = true);
                 
                 // Synth parameters
                 this.oscType = 'sine';
-                this.adsr = { attack: 0.8, decay: 1.0, sustain: 0.8, release: 1.5 };
-                this.filter = { cutoff: 900, resonance: 0.8 };
-                this.delay = { enabled: true, time: 0.6, feedback: 0.7 };
+                this.adsr = { attack: 0.5, decay: 0.8, sustain: 0.7, release: 1.2 };
+                this.filter = { cutoff: 1200, resonance: 0.8 };
+                this.delay = { enabled: true, time: 0.5, feedback: 0.5 };
                 break;
         }
     }
