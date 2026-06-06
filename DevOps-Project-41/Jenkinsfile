@@ -8,10 +8,17 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code...'
+                checkout scm
+            }
+        }
+
         stage('Validate Environment') {
             steps {
                 echo 'Verifying workspace files...'
-                sh 'ls -la'
+                sh 'ls -la DevOps-Project-41/'
             }
         }
 
@@ -25,7 +32,6 @@ pipeline {
         stage('Deploy to Localhost') {
             steps {
                 echo 'Deploying to Localhost...'
-                // Stop and remove existing container if it exists
                 sh """
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
