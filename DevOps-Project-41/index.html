@@ -3,335 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NebulaSynth - Interactive Web Audio Synthesizer & Sequencer</title>
+    <title>Syed Mohsin | DevOps & Cloud Engineer Portfolio</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Stylesheet -->
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Ambient Background Lighting -->
-    <div class="ambient-glow cyan-glow"></div>
-    <div class="ambient-glow magenta-glow"></div>
-    <div class="ambient-glow purple-glow"></div>
+    <!-- Background Gradient Grids -->
+    <div class="ambient-bg cyan-ambient"></div>
+    <div class="ambient-bg green-ambient"></div>
     
     <div class="app-container">
-        <!-- Header Section -->
+        <!-- Main Navigation Header -->
         <header class="app-header">
             <div class="logo-area">
                 <div class="logo-icon">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <i class="fa-solid fa-terminal"></i>
                 </div>
                 <div class="logo-text">
-                    <h1>NEBULA<span>SYNTH</span></h1>
-                    <p>Playful Web Audio Synthesizer & Step Sequencer</p>
+                    <h1>SYED<span>MOHSIN</span></h1>
+                    <p class="subtitle">DevOps & Cloud Engineer</p>
                 </div>
             </div>
             
-            <div class="header-controls">
-                <!-- Preset Controller -->
-                <div class="preset-selector">
-                    <span class="control-label"><i class="fa-solid fa-sliders"></i> Presets</span>
-                    <div class="preset-buttons">
-                        <button class="preset-btn active" data-preset="space-odyssey">Garden Dreams 🌿</button>
-                        <button class="preset-btn" data-preset="cyber-drive">Playful Meadow 🌸</button>
-                        <button class="preset-btn" data-preset="retro-waves">Ocean Breeze 🌊</button>
-                        <button class="preset-btn" data-preset="ambient-fog">Dreamy Lullaby 🌙</button>
-                    </div>
-                </div>
-                
-                <!-- Quick Help Trigger -->
-                <button id="help-btn" class="icon-btn tooltip" data-tooltip="Keyboard Shortcuts">
-                    <i class="fa-solid fa-keyboard"></i>
-                </button>
-            </div>
+            <nav class="main-nav">
+                <a href="#about" class="nav-link"><i class="fa-solid fa-user-astronaut"></i> About</a>
+                <a href="#skills" class="nav-link"><i class="fa-solid fa-gears"></i> Skills</a>
+                <a href="#projects" class="nav-link"><i class="fa-solid fa-diagram-project"></i> Projects</a>
+                <a href="#experience" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Experience</a>
+                <a href="#contact" class="nav-link btn-cta">Get In Touch <i class="fa-solid fa-paper-plane"></i></a>
+            </nav>
         </header>
 
-        <!-- Main Workspace Grid -->
+        <!-- Main Workspace -->
         <main class="workspace-grid">
-            <!-- Left Panel: Synth Controls & ADSR -->
-            <section class="panel synth-panel">
-                <h2 class="panel-title"><i class="fa-solid fa-sliders"></i> Synth Controls</h2>
+            <!-- Hero Panel with Interactive Terminal -->
+            <section class="panel hero-panel">
+                <div class="hero-content">
+                    <span class="badge-accent"><i class="fa-solid fa-circle-nodes"></i> Automating Cloud Deployments</span>
+                    <h2 class="hero-title">Building Resilient, Scalable & Automated Infrastructure</h2>
+                    <p class="hero-desc">
+                        I am a DevOps and Cloud Infrastructure Specialist focused on containerization, CI/CD pipeline optimization, GitOps, and Infrastructure-as-Code.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn-primary">View Projects <i class="fa-solid fa-arrow-down"></i></a>
+                        <a href="#contact" class="btn-secondary">Let's Talk <i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
                 
-                <!-- Oscillator Section -->
-                <div class="control-group">
-                    <h3 class="group-title">Oscillator Type</h3>
-                    <div class="osc-selector">
-                        <label class="osc-option">
-                            <input type="radio" name="osc-type" value="sine" checked>
-                            <span class="osc-card">
-                                <svg viewBox="0 0 40 20"><path d="M 0 10 Q 10 0, 20 10 T 40 10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                                <span>Sine</span>
-                            </span>
-                        </label>
-                        <label class="osc-option">
-                            <input type="radio" name="osc-type" value="triangle">
-                            <span class="osc-card">
-                                <svg viewBox="0 0 40 20"><path d="M 0 15 L 10 5 L 20 15 L 30 5 L 40 15" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                                <span>Triangle</span>
-                            </span>
-                        </label>
-                        <label class="osc-option">
-                            <input type="radio" name="osc-type" value="sawtooth">
-                            <span class="osc-card">
-                                <svg viewBox="0 0 40 20"><path d="M 0 15 L 15 5 L 15 15 L 30 5 L 30 15 L 40 10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                                <span>Saw</span>
-                            </span>
-                        </label>
-                        <label class="osc-option">
-                            <input type="radio" name="osc-type" value="square">
-                            <span class="osc-card">
-                                <svg viewBox="0 0 40 20"><path d="M 0 15 L 0 5 L 15 5 L 15 15 L 30 15 L 30 5 L 40 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-                                <span>Square</span>
-                            </span>
-                        </label>
+                <!-- Interactive Terminal Simulator -->
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="term-btn close"></span>
+                            <span class="term-btn minimize"></span>
+                            <span class="term-btn maximize"></span>
+                        </div>
+                        <div class="terminal-title">syed@mohsin-devops:~</div>
+                        <div class="terminal-icon"><i class="fa-solid fa-code-branch"></i></div>
                     </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <div class="terminal-line">Welcome to Syed Mohsin's DevOps terminal emulator v1.0.0.</div>
+                        <div class="terminal-line">Type <span class="cmd-highlight">help</span> to view available terminal commands.</div>
+                        <div class="terminal-line"><br></div>
+                        <div class="terminal-prompt-line">
+                            <span class="prompt-user">syed@mohsin-devops</span>:<span class="prompt-dir">~</span>$ <span class="input-display" id="input-display"></span><span class="terminal-cursor"></span>
+                        </div>
+                    </div>
+                    <input type="text" id="terminal-hidden-input" autocomplete="off" autofocus>
                 </div>
+            </section>
 
-                <!-- ADSR Envelope -->
-                <div class="control-group">
-                    <h3 class="group-title">ADSR Envelope</h3>
-                    <div class="envelope-grid">
-                        <div class="fader-control">
-                            <div class="slider-wrapper">
-                                <input type="range" id="adsr-attack" min="0.01" max="1.5" step="0.01" value="0.1" class="vertical-slider">
-                            </div>
-                            <span class="fader-val" id="val-attack">0.1s</span>
-                            <span class="fader-label">Attack</span>
-                        </div>
-                        <div class="fader-control">
-                            <div class="slider-wrapper">
-                                <input type="range" id="adsr-decay" min="0.01" max="2" step="0.01" value="0.3" class="vertical-slider">
-                            </div>
-                            <span class="fader-val" id="val-decay">0.3s</span>
-                            <span class="fader-label">Decay</span>
-                        </div>
-                        <div class="fader-control">
-                            <div class="slider-wrapper">
-                                <input type="range" id="adsr-sustain" min="0" max="1" step="0.01" value="0.6" class="vertical-slider">
-                            </div>
-                            <span class="fader-val" id="val-sustain">0.6</span>
-                            <span class="fader-label">Sustain</span>
-                        </div>
-                        <div class="fader-control">
-                            <div class="slider-wrapper">
-                                <input type="range" id="adsr-release" min="0.01" max="3" step="0.01" value="0.5" class="vertical-slider">
-                            </div>
-                            <span class="fader-val" id="val-release">0.5s</span>
-                            <span class="fader-label">Release</span>
-                        </div>
+            <!-- About Panel -->
+            <section class="panel about-panel" id="about">
+                <h2 class="panel-title"><i class="fa-solid fa-user-astronaut"></i> About Me</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            I design and implement automated delivery systems that bridge the gap between development and operations. With a strong focus on high availability, cost efficiency, and security, I help engineering teams ship software rapidly and reliably.
+                        </p>
+                        <p>
+                            My core expertise includes building declarative GitOps pipelines, orchestration systems, monitoring platforms, and managing Infrastructure-as-Code templates.
+                        </p>
                     </div>
-                </div>
-
-                <!-- Filter & Delay Section -->
-                <div class="control-group split-group">
-                    <div class="sub-group">
-                        <h3 class="group-title">Filter Cutoff</h3>
-                        <div class="dial-container">
-                            <div class="dial-wrapper">
-                                <input type="range" id="filter-cutoff" min="50" max="15000" step="1" value="2500" class="dial-input">
-                                <div class="dial-plate" id="cutoff-plate">
-                                    <div class="dial-indicator"></div>
-                                </div>
-                            </div>
-                            <span class="dial-val" id="val-cutoff">2500 Hz</span>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <h3>Docker</h3>
+                            <p>Containerization</p>
                         </div>
-                    </div>
-                    
-                    <div class="sub-group">
-                        <h3 class="group-title">Filter Resonance</h3>
-                        <div class="dial-container">
-                            <div class="dial-wrapper">
-                                <input type="range" id="filter-resonance" min="0" max="20" step="0.1" value="1" class="dial-input">
-                                <div class="dial-plate" id="res-plate">
-                                    <div class="dial-indicator"></div>
-                                </div>
-                            </div>
-                            <span class="dial-val" id="val-res">1.0</span>
+                        <div class="stat-card">
+                            <h3>Jenkins</h3>
+                            <p>CI/CD Automation</p>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Delay Effect -->
-                <div class="control-group delay-control-group">
-                    <div class="delay-header">
-                        <h3 class="group-title">Space Delay</h3>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="delay-toggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="delay-sliders disabled-overlay" id="delay-controls">
-                        <div class="horizontal-fader">
-                            <span class="fader-lbl">Time</span>
-                            <input type="range" id="delay-time" min="0.1" max="1" step="0.05" value="0.3">
-                            <span class="val-lbl" id="val-delay-time">0.3s</span>
-                        </div>
-                        <div class="horizontal-fader">
-                            <span class="fader-lbl">Feedback</span>
-                            <input type="range" id="delay-feedback" min="0" max="0.9" step="0.05" value="0.4">
-                            <span class="val-lbl" id="val-delay-feedback">40%</span>
+                        <div class="stat-card">
+                            <h3>Kubernetes</h3>
+                            <p>Orchestration</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Center Panel: The Step Sequencer -->
-            <section class="panel sequencer-panel">
-                <div class="sequencer-header">
-                    <h2 class="panel-title"><i class="fa-solid fa-list-ol"></i> Step Sequencer</h2>
-                    <div class="sequencer-controls">
-                        <!-- Transport Buttons -->
-                        <button id="play-btn" class="transport-btn play-mode"><i class="fa-solid fa-play"></i> Play</button>
-                        <button id="clear-btn" class="transport-btn secondary"><i class="fa-solid fa-trash-can"></i> Clear</button>
-                        
-                        <!-- Tempo Controller -->
-                        <div class="tempo-control">
-                            <span class="control-label">BPM</span>
-                            <button class="tempo-adjust" id="bpm-minus">-</button>
-                            <input type="number" id="bpm-val" value="120" min="60" max="240">
-                            <button class="tempo-adjust" id="bpm-plus">+</button>
+            <!-- Skills Matrix Panel -->
+            <section class="panel skills-panel" id="skills">
+                <h2 class="panel-title"><i class="fa-solid fa-gears"></i> Core Competencies</h2>
+                <div class="skills-grid">
+                    <!-- CI/CD -->
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-rotate"></i>
+                            <h3>CI/CD Pipelines</h3>
                         </div>
+                        <ul class="skill-list">
+                            <li><i class="fa-brands fa-jenkins"></i> Jenkins (Pipeline-as-Code)</li>
+                            <li><i class="fa-brands fa-github"></i> GitHub Actions</li>
+                            <li><i class="fa-brands fa-gitlab"></i> GitLab CI/CD</li>
+                            <li><i class="fa-solid fa-anchor"></i> ArgoCD (GitOps)</li>
+                        </ul>
                     </div>
-                </div>
 
-                <!-- Sequencer Matrix Container -->
-                <div class="matrix-wrapper">
-                    <div class="matrix-header">
-                        <div class="track-label-placeholder"></div>
-                        <div class="steps-numbers">
-                            <!-- JS Will generate step numbers 1-16 -->
-                            <span>1</span><span>2</span><span>3</span><span>4</span>
-                            <span>5</span><span>6</span><span>7</span><span>8</span>
-                            <span>9</span><span>10</span><span>11</span><span>12</span>
-                            <span>13</span><span>14</span><span>15</span><span>16</span>
+                    <!-- Containers & Orchestration -->
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-cubes"></i>
+                            <h3>Containers</h3>
                         </div>
+                        <ul class="skill-list">
+                            <li><i class="fa-brands fa-docker"></i> Docker & Compose</li>
+                            <li><i class="fa-solid fa-dharmachakra"></i> Kubernetes / EKS / AKS</li>
+                            <li><i class="fa-solid fa-box"></i> Helm Charting</li>
+                            <li><i class="fa-solid fa-network-wired"></i> Service Mesh (Istio)</li>
+                        </ul>
                     </div>
-                    
-                    <div class="sequencer-matrix" id="sequencer-matrix">
-                        <!-- Rows will be injected here by JS:
-                             Row 1: Kick
-                             Row 2: Snare
-                             Row 3: Hi-hat
-                             Row 4: Synth Bass
-                             Row 5: Synth Lead
-                        -->
-                    </div>
-                </div>
 
-                <!-- Sequencer Playback Indicator Track -->
-                <div class="timeline-indicator-container">
-                    <div class="track-label-placeholder"></div>
-                    <div class="timeline-dots" id="timeline-dots">
-                        <!-- Dots will glow corresponding to active sequencer column -->
+                    <!-- Infrastructure as Code -->
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h3>Infrastructure as Code</h3>
+                        </div>
+                        <ul class="skill-list">
+                            <li><i class="fa-solid fa-cubes-stacked"></i> Terraform</li>
+                            <li><i class="fa-solid fa-gears"></i> Ansible</li>
+                            <li><i class="fa-solid fa-code"></i> CloudFormation</li>
+                            <li><i class="fa-brands fa-linux"></i> Bash & Python Scripting</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cloud & Monitoring -->
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <h3>Cloud & Observability</h3>
+                        </div>
+                        <ul class="skill-list">
+                            <li><i class="fa-brands fa-aws"></i> Amazon Web Services (AWS)</li>
+                            <li><i class="fa-brands fa-microsoft"></i> Microsoft Azure</li>
+                            <li><i class="fa-solid fa-chart-pie"></i> Prometheus & Grafana</li>
+                            <li><i class="fa-solid fa-list-check"></i> ELK Stack / Loki</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Right Panel: Visualizer & Keyboard -->
-            <section class="panel visualizer-panel">
-                <div class="visualizer-header">
-                    <h2 class="panel-title"><i class="fa-solid fa-chart-simple"></i> Signal Visualizer</h2>
-                    <div class="visualizer-modes">
-                        <button class="mode-btn active" data-mode="waveform">Waveform</button>
-                        <button class="mode-btn" data-mode="frequency">Spectrum</button>
+            <!-- Projects Panel -->
+            <section class="panel projects-panel" id="projects">
+                <h2 class="panel-title"><i class="fa-solid fa-diagram-project"></i> DevOps Projects</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <div class="project-card">
+                        <div class="project-icon"><i class="fa-brands fa-jenkins"></i></div>
+                        <h3>NebulaSynth CI/CD</h3>
+                        <p class="project-desc">
+                            Automated pipeline utilizing a custom Jenkins Docker agent running inside containerized infrastructure, compiling and deploying applications live on commit pushes via SCM polling.
+                        </p>
+                        <div class="project-tech">
+                            <span>Jenkins</span>
+                            <span>Docker</span>
+                            <span>Nginx</span>
+                            <span>Webhooks</span>
+                        </div>
+                        <a href="https://github.com/syedmohsin09/DevOps-Projects" class="project-link" target="_blank">View Repository <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-card">
+                        <div class="project-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+                        <h3>K8s Cluster Setup</h3>
+                        <p class="project-desc">
+                            Created a highly available Kubernetes cluster on AWS EC2 instances provisioned via Terraform and bootstrapped using Ansible playbooks.
+                        </p>
+                        <div class="project-tech">
+                            <span>Kubernetes</span>
+                            <span>Terraform</span>
+                            <span>Ansile</span>
+                            <span>AWS EC2</span>
+                        </div>
+                        <a href="https://github.com/syedmohsin09/DevOps-Projects" class="project-link" target="_blank">View Repository <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                        <div class="project-icon"><i class="fa-solid fa-anchor"></i></div>
+                        <h3>GitOps Deployments</h3>
+                        <p class="project-desc">
+                            Implements GitOps CD engine utilizing ArgoCD monitoring GitHub repos to auto-sync infrastructure state with live EKS clusters, eliminating manual updates.
+                        </p>
+                        <div class="project-tech">
+                            <span>ArgoCD</span>
+                            <span>AWS EKS</span>
+                            <span>Helm</span>
+                            <span>GitHub Actions</span>
+                        </div>
+                        <a href="https://github.com/syedmohsin09/DevOps-Projects" class="project-link" target="_blank">View Repository <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                     </div>
                 </div>
+            </section>
 
-                <!-- Audio Visualizer Canvas -->
-                <div class="canvas-container">
-                    <canvas id="visualizer-canvas"></canvas>
-                    <!-- Loading / Interaction prompt overlay -->
-                    <div class="audio-start-overlay" id="start-overlay">
-                        <div class="overlay-content">
-                            <div class="pulse-icon"><i class="fa-solid fa-volume-high"></i></div>
-                            <h3>Initialize Audio Engine</h3>
-                            <p>Click anywhere or play a note to activate Web Audio synthesis.</p>
-                            <button class="action-btn" id="init-audio-btn">Activate Sound</button>
+            <!-- Experience Timeline Panel -->
+            <section class="panel experience-panel" id="experience">
+                <h2 class="panel-title"><i class="fa-solid fa-clock-rotate-left"></i> Experience Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">Present</div>
+                        <div class="timeline-content">
+                            <h3>Lead DevOps & Cloud Engineer</h3>
+                            <p class="company">Freelance & Open Source Contributor</p>
+                            <p>Designing custom, isolated development/CI environments. Successfully containerized Jenkins servers and enabled sidecar-Docker socket connections, streamlining automated staging deployments.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2024 - 2025</div>
+                        <div class="timeline-content">
+                            <h3>DevOps Automation Specialist</h3>
+                            <p class="company">Infrastructure Solutions Ltd.</p>
+                            <p>Configured Infrastructure as Code templates in Terraform to manage cloud setups. Wrote automated CI scripts in Python and shell commands, cutting manual setup times by over 60%.</p>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Keyboard Section -->
-                <div class="keyboard-container">
-                    <div class="keyboard-header">
-                        <h3 class="group-title"><i class="fa-solid fa-music"></i> Interactive Synth Keyboard</h3>
-                        <span class="octave-label">Octave: C4-B4</span>
-                    </div>
+            <!-- Contact Panel -->
+            <section class="panel contact-panel" id="contact">
+                <h2 class="panel-title"><i class="fa-solid fa-paper-plane"></i> Contact Me</h2>
+                <div class="contact-grid">
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!'); this.reset();">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-name">Name</label>
+                                <input type="text" id="form-name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-email">Email</label>
+                                <input type="email" id="form-email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-msg">Message</label>
+                            <textarea id="form-msg" rows="5" placeholder="Let's build something amazing together..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
                     
-                    <div class="synth-keyboard" id="piano-keyboard">
-                        <!-- Piano keys (12 keys in C4 octave) -->
-                        <div class="key white-key" data-note="C4" data-key="a"><span class="key-hint">A</span><span class="note-name">C</span></div>
-                        <div class="key black-key" data-note="C#4" data-key="w"><span class="key-hint">W</span><span class="note-name">C#</span></div>
-                        <div class="key white-key" data-note="D4" data-key="s"><span class="key-hint">S</span><span class="note-name">D</span></div>
-                        <div class="key black-key" data-note="D#4" data-key="e"><span class="key-hint">E</span><span class="note-name">D#</span></div>
-                        <div class="key white-key" data-note="E4" data-key="d"><span class="key-hint">D</span><span class="note-name">E</span></div>
-                        <div class="key white-key" data-note="F4" data-key="f"><span class="key-hint">F</span><span class="note-name">F</span></div>
-                        <div class="key black-key" data-note="F#4" data-key="t"><span class="key-hint">T</span><span class="note-name">F#</span></div>
-                        <div class="key white-key" data-note="G4" data-key="g"><span class="key-hint">G</span><span class="note-name">G</span></div>
-                        <div class="key black-key" data-note="G#4" data-key="y"><span class="key-hint">Y</span><span class="note-name">G#</span></div>
-                        <div class="key white-key" data-note="A4" data-key="h"><span class="key-hint">H</span><span class="note-name">A</span></div>
-                        <div class="key black-key" data-note="A#4" data-key="u"><span class="key-hint">U</span><span class="note-name">A#</span></div>
-                        <div class="key white-key" data-note="B4" data-key="j"><span class="key-hint">J</span><span class="note-name">B</span></div>
+                    <div class="contact-info">
+                        <h3>Connect With Me</h3>
+                        <p>Feel free to reach out for collaboration, projects, or infrastructure design inquiries.</p>
+                        <div class="social-links">
+                            <a href="https://github.com/syedmohsin09" target="_blank" class="social-link tooltip" data-tooltip="GitHub"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="social-link tooltip" data-tooltip="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="mailto:syed.mohsin@example.com" class="social-link tooltip" data-tooltip="Email"><i class="fa-solid fa-envelope"></i></a>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- Keyboard Shortcut Overlay Modal -->
-        <div class="modal" id="shortcuts-modal">
-            <div class="modal-content">
-                <button class="modal-close" id="modal-close-btn">&times;</button>
-                <h2>Keyboard Mapping Reference</h2>
-                <p>Play the synthesizer using your computer keyboard keys:</p>
-                <div class="shortcut-grid">
-                    <div class="shortcut-item"><kbd>A</kbd> <span>C4</span></div>
-                    <div class="shortcut-item"><kbd>W</kbd> <span>C#4</span></div>
-                    <div class="shortcut-item"><kbd>S</kbd> <span>D4</span></div>
-                    <div class="shortcut-item"><kbd>E</kbd> <span>D#4</span></div>
-                    <div class="shortcut-item"><kbd>D</kbd> <span>E4</span></div>
-                    <div class="shortcut-item"><kbd>F</kbd> <span>F4</span></div>
-                    <div class="shortcut-item"><kbd>T</kbd> <span>F#4</span></div>
-                    <div class="shortcut-item"><kbd>G</kbd> <span>G4</span></div>
-                    <div class="shortcut-item"><kbd>Y</kbd> <span>G#4</span></div>
-                    <div class="shortcut-item"><kbd>H</kbd> <span>A4</span></div>
-                    <div class="shortcut-item"><kbd>U</kbd> <span>A#4</span></div>
-                    <div class="shortcut-item"><kbd>J</kbd> <span>B4</span></div>
-                </div>
-                <div class="spacer"></div>
-                <h2>Control Shortcuts</h2>
-                <div class="shortcut-grid">
-                    <div class="shortcut-item"><kbd>Space</kbd> <span>Play / Pause Sequencer</span></div>
-                    <div class="shortcut-item"><kbd>Esc</kbd> <span>Clear Matrix</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Master Volume / Footer Panel -->
+        <!-- Footer -->
         <footer class="app-footer">
-            <div class="master-volume-control">
-                <span class="footer-lbl"><i class="fa-solid fa-volume-high"></i> Master Volume</span>
-                <input type="range" id="master-gain" min="0" max="1" step="0.05" value="0.7">
-                <span class="val-lbl" id="val-master-gain">70%</span>
-            </div>
-            
             <div class="footer-tagline">
-                <span>Procedural Audio Synthesis powered by Web Audio API</span>
+                <span>© 2026 Syed Mohsin. All rights reserved. Designed & Automated.</span>
             </div>
-
             <div class="footer-links">
-                <a href="#" class="portfolio-link"><i class="fa-brands fa-github"></i> View on GitHub</a>
+                <a href="https://github.com/syedmohsin09/DevOps-Projects" target="_blank"><i class="fa-brands fa-github"></i> Source Code</a>
             </div>
         </footer>
     </div>
 
-    <!-- Web Audio Engine Modules -->
-    <script src="audio.js"></script>
-    <script src="visualizer.js"></script>
+    <!-- Main JavaScript Application Logic -->
     <script src="app.js"></script>
 </body>
 </html>
