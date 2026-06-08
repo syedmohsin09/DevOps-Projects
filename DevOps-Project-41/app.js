@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '  <span class="cmd-highlight">[CI/CD]</span>        Jenkins, GitHub Actions, GitLab CI, ArgoCD',
             '  <span class="cmd-highlight">[Containers]</span>   Docker, Kubernetes (K8s), Helm, Istio',
             '  <span class="cmd-highlight">[IaC]</span>          Terraform, Ansible, CloudFormation',
-            '  <span class="cmd-highlight">[Cloud]</span>        AWS, Microsoft Azure, GCP',
-            '  <span class="cmd-highlight">[Monitoring]</span>   Prometheus, Grafana, ELK Stack, Loki',
+            '  <span class="cmd-highlight">[Cloud]</span>        AWS, Microsoft Azure, GCP, IAM Security',
+            '  <span class="cmd-highlight">[Monitoring]</span>   Prometheus, Grafana, ELK Stack, Datadog APM',
+            '  <span class="cmd-highlight">[Security]</span>     OAuth2, JWT, Keycloak, HashiCorp Vault',
             '  <span class="cmd-highlight">[Scripting]</span>    Bash, Python, JavaScript, Go'
         ],
         projects: () => [
