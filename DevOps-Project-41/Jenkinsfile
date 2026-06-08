@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'nebula-synth-app'
-        CONTAINER_NAME = 'nebula-synth-container'
+        IMAGE_NAME = 'devops-portfolio'
+        CONTAINER_NAME = 'portfolio-app'
         PORT = '80'
     }
 
@@ -24,7 +24,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image for NebulaSynth...'
+                echo 'Building Docker image for DevOps Portfolio...'
                 sh "docker build -t ${IMAGE_NAME}:latest -f DevOps-Project-41/Dockerfile DevOps-Project-41/"
             }
         }

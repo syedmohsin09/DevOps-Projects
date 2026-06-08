@@ -5,25 +5,25 @@
 
 /* --- Custom Variables & Palette --- */
 :root {
-    --bg-darkest: #030a10;
-    --bg-dark: #06111a;
-    --bg-panel: rgba(6, 20, 32, 0.75);
-    --bg-panel-solid: #081724;
-    --border-color: rgba(0, 230, 118, 0.1);
-    --border-color-glow: rgba(0, 230, 118, 0.35);
+    --bg-darkest: #02060c; /* rich pitch black */
+    --bg-dark: #0a192f; /* deep navy blue */
+    --bg-panel: rgba(10, 25, 47, 0.75); /* transparent navy blue glass */
+    --bg-panel-solid: #0d223f;
+    --border-color: rgba(64, 196, 255, 0.1); /* transparent blue border */
+    --border-color-glow: rgba(64, 196, 255, 0.35);
     
     /* Neon Accents */
-    --neon-cyan: #00e676; /* vibrant green */
-    --neon-cyan-glow: rgba(0, 230, 118, 0.4);
-    --neon-blue: #40c4ff; /* sky blue */
-    --neon-blue-glow: rgba(64, 196, 255, 0.4);
-    --neon-purple: #7c4dff;
-    --neon-purple-glow: rgba(124, 77, 255, 0.4);
+    --neon-cyan: #00bfff; /* vibrant electric sky blue */
+    --neon-cyan-glow: rgba(0, 191, 255, 0.4);
+    --neon-blue: #6366f1; /* electric indigo/blue */
+    --neon-blue-glow: rgba(99, 102, 241, 0.4);
+    --neon-purple: #a855f7; /* neon purple */
+    --neon-purple-glow: rgba(168, 85, 247, 0.4);
     
     /* Text Colors */
-    --text-primary: #f1f7f3;
-    --text-secondary: #8ab698;
-    --text-muted: #4e6b56;
+    --text-primary: #f8fafc; /* crisp white/slate */
+    --text-secondary: #94a3b8; /* cool grey/slate */
+    --text-muted: #475569;
     
     /* Fonts */
     --font-primary: 'Space Grotesk', sans-serif;
